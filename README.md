@@ -33,9 +33,40 @@ gulp.task('default', function () {
 ![difference](./src/image/sass-lint-img.png)
 > 결론은 gulp-sass-lint 플러그인을 따로 쓰는것보다 gulp-sass의 error message가 훨씬 좋음
 
+## 2. gulp clean-css clean-js
+### gulp-clean
+> gulp-clean: 기존 dist 파일 삭제
 
+[gulp-clean](https://www.npmjs.com/package/gulp-clean)
 
-## 2. gulp building
+#### npm install & use
+```sh
+npm install --save-dev gulp-clean
+
+gulp clean-css
+gulp clean-js
+```
+
+#### gulpfile.js
+##### 플러그인 호출, 경로 저장
+```js
+var clean = require('gulp-clean');
+```
+
+##### task 작성
+```js
+gulp.task('clean-css', function() {
+	return gulp.src(dist + '/*.css', {read: false})
+            .pipe(clean());
+});
+
+gulp.task('clean-js', function() {
+	return gulp.src(dist + '/*.js', {read: false})
+			.pipe(clean());
+});
+```
+
+## 3. gulp building
 ### browserify + vinyl-source-stream + vinyl-buffer + gulp-uglify + gulp-jshint
 > gulp-sass: sass 파일병합, 빌드 [gulp-sass](https://www.npmjs.com/package/gulp-sass)
 > browserify + vinyl-source-stream + vinyl-buffer: js 파일 병합, 빌드를 위한 플러그인 [gulp와 vinyl](http://programmingsummaries.tistory.com/382)
@@ -52,7 +83,6 @@ npm install browserify vinyl-buffer vinyl-source-stream gulp-uglify gulp-jshint 
 ##### 플러그인 호출, 경로 저장
 ```js
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     jshint = require('gulp-jshint'),
     stylish = require('jshint-stylish'),
@@ -87,7 +117,6 @@ gulp.task('js', ['lint-js'], function() {
    .pipe(source('bundle.js'))
    .pipe(buffer())
    .pipe(sourcemaps.init({loadMaps: true}))
-   .pipe(uglify())
    .pipe(sourcemaps.write(DIR.MAP))
    .pipe(gulp.dest(dist));
 });
@@ -100,7 +129,8 @@ gulp.task('js', ['lint-js'], function() {
 gulp 내장 플러그인
 
 #### gulpfile.js
-##### 플러그인 호출, 경로 저장
+##### task 작성
+- sass와 함께 빌드
 ```js
 // watch
 gulp.task('watch', function() {
@@ -109,6 +139,45 @@ gulp.task('watch', function() {
 });
 ```
 
+## 5. gulp minify
+### file compression
+#### npm install & use
+```sh
+npm install --save-dev gulp-rename gulp-uglify gulp-uglifycss
+```
+
+#### gulpfile.js
+##### 플러그인 호출, 경로 저장
+```js
+var uglify = require('gulp-uglify'),
+    uglifycss = require('gulp-uglifycss'),
+    rename = require('gulp-rename');
+```
+
+##### task 작성
+```js
+// min build
+gulp.task('min-js', function(){
+    gulp.src(dist +'/*.js')
+    .pipe(uglify())
+    .pipe(rename({
+        suffix: '.min'
+    }))
+    .pipe(gulp.dest(dist));
+
+});
+gulp.task('min-css', function() {
+    gulp.src(dist +'/*.css')
+    .pipe(uglifycss({ //배포용
+        "maxLineLen": 80,
+        "uglyComments": true
+    }))
+    .pipe(rename({
+        suffix: '.min'
+    }))
+    .pipe(gulp.dest(dist));
+});
+```
 
 # npm scripts
 개발작업에서 사용되는 build와 배포에 사용되는 build를 구분한다.

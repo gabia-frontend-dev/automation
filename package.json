@@ -14,19 +14,22 @@
     "build": "node-sass --output-style compressed --source-map dist/map/ -o src/sass/utils/ src/sass/gtris.scss dist/gtris.min.css && uglifyjs src/js/util/*.js src/js/components/*.js -o dist/bundle.min.js --source-map dist/map/bundle.min.js.map -p 5 -c -m"
   },
   "devDependencies": {
+    "browserify": "^14.1.0",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-jshint": "^2.0.4",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.0",
-    "gulp-jshint": "^2.0.4",
     "gulp-uglify": "^2.0.0",
-    "browserify": "^14.1.0",
+    "gulp-uglifycss": "^1.0.8",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0",
+    "sass-lint": "^1.10.2",
     "uglify-js": "^2.7.5",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "nodemon": "^1.11.0",
-    "node-sass": "^4.5.0",
-    "sass-lint": "^1.10.2",
-    "jshint": "^2.9.4",
-    "jshint-stylish": "^2.2.1"
+    "vinyl-source-stream": "^1.1.0"
   }
 }
