@@ -91,7 +91,7 @@ gulp.task('min-css', function() {
     .pipe(gulp.dest(dist));
 });
 
-// imagemin
+// image minify
 gulp.task('imagemin', function() {
     gulp.src(SRC.IMG)
     .pipe(imagemin())

@@ -179,7 +179,7 @@ gulp.task('min-css', function() {
 });
 ```
 
-## 5. gulp imagemin
+## 6. gulp imagemin
 ### Minify PNG, JPEG, GIF and SVG images with imagemin
 #### npm install & use
 ```sh
