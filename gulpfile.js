@@ -11,7 +11,8 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     uglify = require('gulp-uglify'),
     uglifycss = require('gulp-uglifycss'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    imagemin = require('gulp-imagemin');
 
 // paths
 var DIR = {
@@ -21,7 +22,8 @@ var DIR = {
 };
 var SRC = {// input file
     JS: DIR.SRC + '/js/**/*.js',
-    SCSS: DIR.SRC + '/sass/*.s+(a|c)ss'
+    SCSS: DIR.SRC + '/sass/*.s+(a|c)ss',
+    IMG: DIR.SRC + '/images/*'
 };
 var dist = DIR.DEST; // output file
 
@@ -87,6 +89,13 @@ gulp.task('min-css', function() {
         suffix: '.min'
     }))
     .pipe(gulp.dest(dist));
+});
+
+// imagemin
+gulp.task('imagemin', function() {
+    gulp.src(SRC.IMG)
+    .pipe(imagemin())
+    .pipe(gulp.dest(dist + '/images'))
 });
 
 // default

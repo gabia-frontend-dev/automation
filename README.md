@@ -30,7 +30,7 @@ gulp.task('default', function () {
     .pipe(sassLint.failOnError())
 });
 ```
-![difference](./src/image/sass-lint-img.png)
+![difference](./src/images/sass-lint-img.png)
 > 결론은 gulp-sass-lint 플러그인을 따로 쓰는것보다 gulp-sass의 error message가 훨씬 좋음
 
 ## 2. gulp clean-css clean-js
@@ -140,7 +140,7 @@ gulp.task('watch', function() {
 ```
 
 ## 5. gulp minify
-### file compression
+### Minify css, js
 #### npm install & use
 ```sh
 npm install --save-dev gulp-rename gulp-uglify gulp-uglifycss
@@ -178,6 +178,30 @@ gulp.task('min-css', function() {
     .pipe(gulp.dest(dist));
 });
 ```
+
+## 5. gulp imagemin
+### Minify PNG, JPEG, GIF and SVG images with imagemin
+#### npm install & use
+```sh
+npm install --save-dev gulp-rename gulp-uglify gulp-uglifycss
+```
+
+#### gulpfile.js
+##### 플러그인 호출, 경로 저장
+```js
+var imagemin = require('gulp-imagemin');
+```
+
+##### task 작성
+```js
+gulp.task('imagemin', function() {
+    gulp.src(SRC.IMG)
+    .pipe(imagemin())
+    .pipe(gulp.dest(dist))
+});
+```
+
+------------------------------------------
 
 # npm scripts
 개발작업에서 사용되는 build와 배포에 사용되는 build를 구분한다.
